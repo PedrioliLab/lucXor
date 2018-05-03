@@ -108,9 +108,9 @@ class PepXML extends DefaultHandler {
 		    // search_hit with more then one hit_rank=1 hits
 		        curPSM = new PSM();
 
-			curPSM.specId = specId
-			curPSM.scanNum = scanNum
-			curPSM.charge = charge
+			curPSM.specId = specId;
+			curPSM.scanNum = scanNum;
+			curPSM.charge = charge;
 
 			curPSM.origPep.peptide = attr.getValue("peptide");
 		}
