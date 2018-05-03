@@ -30,6 +30,9 @@ class PepXML extends DefaultHandler {
 	String AA_alphabet = "ACDEFGHIKLMNPQRSTVWY";
 	PSM curPSM = null;
 	boolean recordMods;
+	String specId;
+        int scanNum;
+        int charge;
 	
 	// Default constructor for this class
 	PepXML(File inputXML) throws ParserConfigurationException, SAXException, IOException {
@@ -94,14 +97,21 @@ class PepXML extends DefaultHandler {
 		}
 		
 		if(qName.equalsIgnoreCase("spectrum_query")) {
-			curPSM = new PSM();
-			
-			curPSM.specId = attr.getValue("spectrum");
-			curPSM.scanNum = Integer.valueOf( attr.getValue("start_scan") );
-			curPSM.charge = Integer.valueOf( attr.getValue("assumed_charge") );
+			specId = attr.getValue("spectrum");
+			scanNum = Integer.valueOf( attr.getValue("start_scan") );
+			charge = Integer.valueOf( attr.getValue("assumed_charge") );
 		}
 		
 		if(qName.equalsIgnoreCase("search_hit")) {
+		    // Need to instanciate here rother then
+		    // spectrum_query element to account for
+		    // search_hit with more then one hit_rank=1 hits
+		        curPSM = new PSM();
+
+			curPSM.specId = specId
+			curPSM.scanNum = scanNum
+			curPSM.charge = charge
+
 			curPSM.origPep.peptide = attr.getValue("peptide");
 		}
 		
