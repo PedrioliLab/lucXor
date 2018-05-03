@@ -24,6 +24,7 @@ class PepXML extends DefaultHandler {
 	
 	HashMap<String, Double> variableMods = null;
 	HashMap<String, Double> fixedMods = null;
+	String prophet_type = "peptideprophet_result";
 	String temp;
 	String searchEngine;
 	String AA_alphabet = "ACDEFGHIKLMNPQRSTVWY";
@@ -45,7 +46,10 @@ class PepXML extends DefaultHandler {
 	
 	public void startElement(String uri, String localName, String qName, Attributes attr) throws SAXException {
 		temp = "";
-		
+
+		if(qName.equalsIgnoreCase("interprophet_summary")) {
+			prophet_type = "interprophet_result";
+		}
 		
 		if(qName.equalsIgnoreCase("search_summary")) {
 			String se = attr.getValue("search_engine");
@@ -147,7 +151,7 @@ class PepXML extends DefaultHandler {
 			}
 		}
 		
-		if(qName.equalsIgnoreCase("peptideprophet_result")) {
+		if(qName.equalsIgnoreCase(prophet_type)) {
 			if(globals.scoringMethod == constants.PEPPROPHET) 
 				curPSM.PSMscore = Double.valueOf(attr.getValue("probability"));
 		}
