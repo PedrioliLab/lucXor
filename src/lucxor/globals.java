@@ -792,7 +792,7 @@ public class globals {
             int N = numThreads;
             if(numThreads > 1) N -= 1;
 
-			final MZXMLFile mzxml = new MZXMLFile(fn, false);
+			final MZXMLFile mzxml = new MZXMLFile(fn, true);
 			mzxml.setNumThreadsForParsing(N);
             mzxml.setParsingTimeout(60L); // 1 minute before it times out trying to read a file
 			final LCMSData lcmsData = new LCMSData(mzxml);
